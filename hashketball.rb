@@ -204,3 +204,34 @@ def big_shoe_rebounds
   end
   rebound_value
 end
+
+def most_points_scored
+  points_value = nil
+  best_points_player = ""
+  game_hash.each do |team, team_attribute|
+    team_attribute[:players].each do |player, stat|
+      if points_value == nil || stat[:points] > points_value
+        points_value = stat[:points]
+        best_points_player = player
+      end
+    end
+  end
+  best_points_player
+end
+
+def winning_team
+  home_points = 0
+  away_points = 0
+  game_hash.each do |team, team_attribute|
+    team_attribute[:players].each do |name, stat|
+      if team == :home
+        home_points += stat[:points]
+      else team == :away
+        away_points += stat[:points]
+      end
+    end
+  end
+  home_points > away_points ? game_hash[:home][:team_name] : game_hash[:away][:team_name]
+end
+
+def player_with_longest_name
